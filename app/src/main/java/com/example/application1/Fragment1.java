@@ -1,7 +1,12 @@
 package com.example.application1;
 
-import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +14,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fragment1 extends Fragment {
-
-    static final String[] LIST_MENU = {"LIST1", "LIST2", "LIST3"}; // 여기에 json으로 연락처 받아서 넣으면 됨
+    final List<String> LIST_MENU = MainActivity.contacts;
 
     public Fragment1() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +38,4 @@ public class Fragment1 extends Fragment {
         return view;
         //return inflater.inflate(R.layout.fragment_fragment1, container, false);
     }
-
-
 }

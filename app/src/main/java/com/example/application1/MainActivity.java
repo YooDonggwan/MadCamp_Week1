@@ -3,11 +3,18 @@ package com.example.application1;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -16,11 +23,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final int FRAGMENT3 = 3;
 
     private Button bt_tab1, bt_tab2, bt_tab3;
-
+    private static Context context;
+    public static List<String> contacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.context = getApplicationContext();
+        
+        contacts = new ArrayList<>();
+        Cursor c = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
+        String str = "";
+        c .moveToFirst();
+        do {
+            String name = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            String phoneNumber = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            str = name + "\n"  + phoneNumber;
+            contacts.add(str);
+        } while (c.moveToNext());
         setContentView(R.layout.activity_main);
 
         // 위젯에 대한 참조
@@ -82,4 +102,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
+    public static Context getAppContext() {
+        return MainActivity.context;
+    }
+
+
+
 }
