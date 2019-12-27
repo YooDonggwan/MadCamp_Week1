@@ -6,6 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.ContactsContract;
+
+import com.handstudio.android.vo.Contact;
 
 public class Fragment2 extends Fragment {
 
