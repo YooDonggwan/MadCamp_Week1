@@ -16,17 +16,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final int FRAGMENT3 = 3;
 
     private Button bt_tab1, bt_tab2, bt_tab3;
-    static final String[] LIST_MENU = {"LIST1", "LIST2", "LIST3"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, LIST_MENU);
-
-        ListView listview = (ListView) findViewById(R.id.listview1);
-        listview.setAdapter(adapter);
 
         // 위젯에 대한 참조
         bt_tab1 = findViewById(R.id.bt_tab1);
