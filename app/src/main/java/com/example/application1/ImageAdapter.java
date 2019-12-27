@@ -39,7 +39,7 @@ public class ImageAdapter extends BaseAdapter {
 
     public ImageAdapter(Context c, int displayWidth){
         mContext = c;
-        //추가... 넘어온 가로크기를 저장.
+        //넘어온 가로크기를 저장.
         this.displayWidth = displayWidth;
         size = displayWidth/3 ;  //화면크기를 / 3으로 나누어서 이미지 사이즈를 구한다.
         pad = 8;
@@ -75,6 +75,12 @@ public class ImageAdapter extends BaseAdapter {
         }else{
             imageView = (ImageView) convertView;
         }
+
+        ImageClickListener imageViewClickListener
+                = new ImageClickListener(mContext, mThumbIds[position]);
+        imageView.setOnClickListener(imageViewClickListener);
+
+
         //이미지뷰에 주어진 위치의 이미지를 설정함
         imageView.setImageResource(mThumbIds[position]);
         return imageView;
