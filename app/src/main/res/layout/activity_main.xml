@@ -1,47 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.application1.MainActivity">
 
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/fragment_container"
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout" />
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <LinearLayout
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/linearLayout">
+        android:layout_height="match_parent" />
 
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/bt_tab1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="연락처"/>
-
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/bt_tab2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="갤러리"/>
-
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/bt_tab3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="날씨"/>
-
-    </LinearLayout>
-
-</RelativeLayout>
-
+</LinearLayout>

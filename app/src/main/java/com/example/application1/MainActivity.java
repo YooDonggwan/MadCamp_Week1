@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.app.Activity;
@@ -25,11 +26,14 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity {
 
     private final int FRAGMENT1 = 1;
     private final int FRAGMENT2 = 2;
@@ -39,11 +43,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static Context context;
     public static List<String> contacts;
 
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        MainActivity.context = getApplicationContext();
+        setContentView(R.layout.activity_main);
 
         contacts = new ArrayList<>();
         Cursor c = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
@@ -55,71 +61,98 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             str = name + "\n"  + phoneNumber;
             contacts.add(str);
         } while (c.moveToNext());
-        setContentView(R.layout.activity_main);
-
-        // 위젯에 대한 참조
-        bt_tab1 = findViewById(R.id.bt_tab1);
-        bt_tab2 = findViewById(R.id.bt_tab2);
-        bt_tab3 = findViewById(R.id.bt_tab3);
 
 
-        // 탭 버튼에 대한 리스너 연결
-        bt_tab1.setOnClickListener(this);
-        bt_tab2.setOnClickListener(this);
-        bt_tab3.setOnClickListener(this);
+        //Initializing the TabLayout
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.addTab(tabLayout.newTab().setText("Contacts"));
+        tabLayout.addTab(tabLayout.newTab().setText("Gallery"));
+        tabLayout.addTab(tabLayout.newTab().setText("Mystery"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        viewPager = (ViewPager) findViewById(R.id.pager);
+
+        TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
+//        // 위젯에 대한 참조
+//        bt_tab1 = findViewById(R.id.bt_tab1);
+//        bt_tab2 = findViewById(R.id.bt_tab2);
+//        bt_tab3 = findViewById(R.id.bt_tab3);
+//
+//
+//        // 탭 버튼에 대한 리스너 연결
+//        bt_tab1.setOnClickListener(this);
+//        bt_tab2.setOnClickListener(this);
+//        bt_tab3.setOnClickListener(this);
 
         // 임의로 액티비티 호출 시점에 어느 프레그먼트를 프레임레이아웃에 띄울 것인지를 정함
-        callFragment(FRAGMENT1);
+//        callFragment(FRAGMENT1);
     }
 
 
+//    @Override
+//    public void onClick(View v){
+//        switch (v.getId()){
+//            case R.id.bt_tab1 :
+//                // '버튼1' 클릭 시 '프래그먼트1' 호출
+//                callFragment(FRAGMENT1);
+//                break;
+//
+//            case R.id.bt_tab2 :
+//                // '버튼2' 클릭 시 '프래그먼트2' 호출
+//                callFragment(FRAGMENT2);
+//                break;
+//
+//            case R.id.bt_tab3 :
+//                callFragment(FRAGMENT3);
+//                break;
+//        }
+//    }
 
-
-
-    @Override
-    public void onClick(View v){
-        switch (v.getId()){
-            case R.id.bt_tab1 :
-                // '버튼1' 클릭 시 '프래그먼트1' 호출
-                callFragment(FRAGMENT1);
-                break;
-
-            case R.id.bt_tab2 :
-                // '버튼2' 클릭 시 '프래그먼트2' 호출
-                callFragment(FRAGMENT2);
-                break;
-
-            case R.id.bt_tab3 :
-                callFragment(FRAGMENT3);
-                break;
-        }
-    }
-
-    private void callFragment(int fragment_no){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        switch(fragment_no){
-            case 1:
-                // '프래그먼트1' 호출
-                Fragment1 fragment1 = new Fragment1();
-                transaction.replace(R.id.fragment_container, fragment1);
-                transaction.commit();
-                break;
-
-            case 2:
-                // '프래그먼트2' 호출
-                Fragment2 fragment2 = new Fragment2();
-                transaction.replace(R.id.fragment_container, fragment2);
-                transaction.commit();
-                break;
-
-            case 3:
-                Fragment3 fragment3 = new Fragment3();
-                transaction.replace(R.id.fragment_container, fragment3);
-                transaction.commit();
-                break;
-        }
-    }
+//    private void callFragment(int fragment_no){
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//
+//        switch(fragment_no){
+//            case 1:
+//                // '프래그먼트1' 호출
+//                Fragment1 fragment1 = new Fragment1();
+//                transaction.replace(R.id.fragment_container, fragment1);
+//                transaction.commit();
+//                break;
+//
+//            case 2:
+//                // '프래그먼트2' 호출
+//                Fragment2 fragment2 = new Fragment2();
+//                transaction.replace(R.id.fragment_container, fragment2);
+//                transaction.commit();
+//                break;
+//
+//            case 3:
+//                Fragment3 fragment3 = new Fragment3();
+//                transaction.replace(R.id.fragment_container, fragment3);
+//                transaction.commit();
+//                break;
+//        }
+//    }
 
     public static Context getAppContext() {
         return MainActivity.context;
