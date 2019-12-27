@@ -3,6 +3,7 @@ package com.example.application1;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,11 +17,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final int FRAGMENT3 = 3;
 
     private Button bt_tab1, bt_tab2, bt_tab3;
-
+    private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.context = getApplicationContext();
         setContentView(R.layout.activity_main);
 
         // 위젯에 대한 참조
@@ -81,5 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 transaction.commit();
                 break;
         }
+    }
+
+    public static Context getAppContext() {
+        return MainActivity.context;
     }
 }
