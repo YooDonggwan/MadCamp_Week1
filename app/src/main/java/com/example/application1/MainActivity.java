@@ -22,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Settings;
+import android.renderscript.ScriptGroup;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,18 +38,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    //For Contacts Tab
     public static List<String> names;
     public static List<PhoneBook> phoneBooks;
 
+    //For Tab Layout
     private TabLayout tabLayout;
     private ViewPager viewPager;
     static private Context context;
+
+    //For Game Tab
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             checkVerify();
         names = new ArrayList<>();
@@ -101,12 +106,17 @@ public class MainActivity extends AppCompatActivity {
     }
     @TargetApi(Build.VERSION_CODES.M)
     public void checkVerify() {
-        if (checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+        if (checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
+         || checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             if (shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS)) {
                 onRequestPermissionsResult(1, new String[]{Manifest.permission.READ_CONTACTS},
                         new int[]{PackageManager.PERMISSION_GRANTED});
             }
-            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, 1);
+            else if (shouldShowRequestPermissionRationale(Manifest.permission.CALL_PHONE)) {
+                onRequestPermissionsResult(1, new String[]{Manifest.permission.CALL_PHONE},
+                        new int[]{PackageManager.PERMISSION_GRANTED});
+            }
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS,Manifest.permission.CALL_PHONE}, 1);
         }
     }
 
