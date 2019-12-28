@@ -23,6 +23,10 @@
             android:name=".ImageActivity"
             android:label="Selected Image">
         </activity>
+        <activity
+            android:name=".ContactClickActivity"
+            android:label="Selected Contact">
+        </activity>
 
     </application>
 

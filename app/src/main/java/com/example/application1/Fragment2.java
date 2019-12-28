@@ -43,8 +43,6 @@ public class Fragment2 extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_fragment2, container, false);
         GridView gridView = (GridView) v.findViewById(R.id.gridview1);
-        //gridView.setAdapter(new ImageAdapter(this));
-        //ImageAdapter adapter = new ImageAdapter(this);
         ImageAdapter adapter = new ImageAdapter(getActivity(), displayWidth); //가로크기의 정보를 같이 넘긴다.
         gridView.setAdapter(adapter);
 
@@ -53,8 +51,6 @@ public class Fragment2 extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-
-
             }
         });
         return v;
