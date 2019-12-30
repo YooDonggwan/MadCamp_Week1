@@ -17,7 +17,17 @@
         android:horizontalSpacing="10dp"
         android:stretchMode="columnWidth"
         android:gravity="center"
+        />
 
+    <Button
+        android:id="@+id/selectbtn"
+        android:layout_width="100sp"
+        android:layout_height="80sp"
+        android:text="+"
+        android:textSize="20sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5sp"
         />
 
 </RelativeLayout>

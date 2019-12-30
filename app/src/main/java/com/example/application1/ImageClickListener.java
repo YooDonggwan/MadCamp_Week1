@@ -9,10 +9,12 @@ public class ImageClickListener implements View.OnClickListener {
     Context context;
 
     int imageID; // 확대해서 보여줄 사진 id
+    String imageURI;
 
-    public ImageClickListener(Context context, int imageID) {
+    public ImageClickListener(Context context, int imageID, String imageURI) {
         this.context = context;
         this.imageID = imageID;
+        this.imageURI = imageURI;
     }
 
 
@@ -24,6 +26,7 @@ public class ImageClickListener implements View.OnClickListener {
 
         Intent intent = new Intent(context, ImageActivity.class);
         intent.putExtra("image ID", imageID);
+        intent.putExtra("image URI", imageURI);
         context.startActivity(intent);
     }
 

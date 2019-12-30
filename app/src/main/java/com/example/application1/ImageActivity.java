@@ -2,6 +2,7 @@ package com.example.application1;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -28,7 +29,11 @@ public class ImageActivity extends Activity {
         // 그것을 ImageView 뷰의 이미지 리소스로 설정합니다.
 
         int imageID = (Integer)receivedIntent.getExtras().get("image ID");
-        imageView.setImageResource(imageID);
+        String imageURI = (String)receivedIntent.getExtras().get("image URI");
+        if (imageID != 0)
+            imageView.setImageResource(imageID);
+        else if (!imageURI.equals(""))
+            imageView.setImageURI(Uri.parse(imageURI));
     }
 
 }

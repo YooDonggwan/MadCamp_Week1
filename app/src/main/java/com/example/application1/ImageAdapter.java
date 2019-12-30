@@ -1,44 +1,36 @@
 package com.example.application1;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ImageAdapter extends BaseAdapter {
 
     private int displayWidth; //화면크기
     private int size; //이미지 크기
     private int pad; //패딩
-
+    private ArrayList<String> thumbsDataList;
+    private ArrayList<String> thumbsIDList;
+    private List<Uri> imagelistUri;
     private Context mContext;
     //출력될 이미지 데이터셋(res/drawable 폴더)
-    private Integer[] mThumbIds = {
-            R.drawable.f1,
-            R.drawable.f2,
-            R.drawable.f3,
-            R.drawable.f4,
-            R.drawable.f5,
-            R.drawable.f6,
-            R.drawable.f7,
-            R.drawable.f8,
-            R.drawable.f9,
-            R.drawable.f10,
-            R.drawable.f11,
-            R.drawable.f12,
-            R.drawable.f13,
-            R.drawable.f14,
-            R.drawable.f15,
-            R.drawable.f16,
-            R.drawable.f17,
-            R.drawable.f18,
-            R.drawable.f19
-    };
+    private List<Object> mThumbIds;
 
     public ImageAdapter(Context c, int displayWidth){
         mContext = c;
+        mThumbIds = new ArrayList<Object>();
+
+        mThumbIds.add(R.drawable.f1);
+        mThumbIds.add(R.drawable.f2);
+        mThumbIds.add(R.drawable.f3);
         //넘어온 가로크기를 저장.
         this.displayWidth = displayWidth;
         size = displayWidth/3 ;  //화면크기를 / 3으로 나누어서 이미지 사이즈를 구한다.
@@ -49,7 +41,7 @@ public class ImageAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         //이미지셋에 있는 아이템의 수를 반환함(그리드뷰는 아이템의 수에 해당하는 행렬을 준비함)
-        return mThumbIds.length;
+        return mThumbIds.size();
     }
 
     @Override
@@ -75,14 +67,26 @@ public class ImageAdapter extends BaseAdapter {
         }else{
             imageView = (ImageView) convertView;
         }
-
-        ImageClickListener imageViewClickListener
-                = new ImageClickListener(mContext, mThumbIds[position]);
-        imageView.setOnClickListener(imageViewClickListener);
-
-
-        //이미지뷰에 주어진 위치의 이미지를 설정함
-        imageView.setImageResource(mThumbIds[position]);
+        Object tmp = mThumbIds.get(position);
+        switch (tmp.getClass().getSimpleName()) {
+            case "Integer":
+                ImageClickListener imageViewClickListener_int
+                        = new ImageClickListener(mContext, (int)tmp, "");
+                imageView.setOnClickListener(imageViewClickListener_int);
+                imageView.setImageResource((int)tmp);
+                break;
+            case "String":
+                System.out.println("string case");
+                ImageClickListener imageViewClickListener_str
+                        = new ImageClickListener(mContext, 0, (String)tmp);
+                imageView.setOnClickListener(imageViewClickListener_str);
+                imageView.setImageURI(Uri.parse((String)tmp));
+                break;
+        }
         return imageView;
+    }
+
+    public void addThumbId(Object o) {
+        mThumbIds.add(o);
     }
 }

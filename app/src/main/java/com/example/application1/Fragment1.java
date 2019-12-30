@@ -1,5 +1,6 @@
 package com.example.application1;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -18,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,29 +36,26 @@ public class Fragment1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //For onclickview
-        Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        Point point = new Point();
-
-        display.getSize(point);
-        int displayWidth = point.x;
+//        Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+//        Point point = new Point();
+//
+//        display.getSize(point);
+//        int displayWidth = point.x;
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment1, null);
 
-        ArrayAdapter Adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU);
+//        ArrayAdapter Adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU);
+        ListViewAdapter adapter = new ListViewAdapter(getActivity(), R.layout.listview_btn_item, REF_MENU, null);
 
         ListView listview = (ListView) view.findViewById(R.id.listview1);
-        listview.setAdapter(Adapter);
+        listview.setAdapter(adapter);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent = new Intent(getActivity(), ContactClickActivity.class);
-                myIntent.putExtra("name", REF_MENU.get(position).getName());
-                myIntent.putExtra("tel", REF_MENU.get(position).getTel());
-                startActivity(myIntent);
-            }
-        });
+//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//            }
+//        });
 
         return view;
         //return inflater.inflate(R.layout.fragment_fragment1, container, false);

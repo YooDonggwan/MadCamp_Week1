@@ -1,11 +1,20 @@
 package com.example.application1;
 
+import android.Manifest;
+import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.media.Image;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,21 +22,26 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Fragment2 extends Fragment {
-
+    final int PICTURE_REQUEST_CODE = 100;
+    String[] permission_list = { Manifest.permission.READ_EXTERNAL_STORAGE };
+    List<Uri> sendlistUri = new ArrayList<Uri>();
+    ImageAdapter adapter;
     public Fragment2() {
-
     }
 
     @Override
@@ -41,10 +55,12 @@ public class Fragment2 extends Fragment {
         int displayWidth = point.x;
         int displayHeight = point.y;
 
+        checkPermission();
+
         View v = inflater.inflate(R.layout.fragment_fragment2, container, false);
         GridView gridView = (GridView) v.findViewById(R.id.gridview1);
-        ImageAdapter adapter = new ImageAdapter(getActivity(), displayWidth); //가로크기의 정보를 같이 넘긴다.
-        gridView.setAdapter(adapter);
+        adapter = new ImageAdapter(getActivity(), displayWidth); //가로크기의 정보를 같이 넘긴다.
+//        gridView.setAdapter(adapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -53,6 +69,98 @@ public class Fragment2 extends Fragment {
                                     long id) {
             }
         });
+
+        Button button = (Button) v.findViewById(R.id.selectbtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { // 갤러리 들어감
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICTURE_REQUEST_CODE);
+            }
+        });
+        gridView.setAdapter(adapter);
         return v;
+    }
+
+    public void checkPermission(){
+        //현재 안드로이드 버전이 6.0미만이면 메서드를 종료한다.
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+            return;
+
+        for(String permission : permission_list){
+            //권한 허용 여부를 확인한다.
+            int chk = getActivity().checkCallingOrSelfPermission(permission);
+
+            if(chk == PackageManager.PERMISSION_DENIED){
+                //권한 허용을여부를 확인하는 창을 띄운다
+                requestPermissions(permission_list,0);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==0)
+        {
+            for(int i=0; i<grantResults.length; i++)
+            {
+                //허용됬다면
+                if(grantResults[i]==PackageManager.PERMISSION_GRANTED){
+                }
+                else {
+                    Toast.makeText(getActivity().getApplicationContext(),"앱권한설정하세요",Toast.LENGTH_LONG).show();
+                    getActivity().finish();
+                }
+            }
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+//        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICTURE_REQUEST_CODE) {
+            if(resultCode == getActivity().RESULT_OK){
+                Uri uri = data.getData();
+                ClipData clipData = data.getClipData();
+                List<Uri> imageListUri = new ArrayList<>();
+                String imagePath ="";
+                ImageView picture1 = new ImageView(getActivity());
+
+                if(clipData == null){
+                    Toast.makeText(getActivity(), "다중선택이 불가능한 기기입니다.", Toast.LENGTH_LONG).show();
+                }
+
+                else if(clipData != null){
+                    if(clipData.getItemCount() == 1){
+
+                    }
+                    else if(clipData.getItemCount() > 1 && clipData.getItemCount() < 5){
+                        for(int i = 0; i < clipData.getItemCount(); i++){
+                            Log.i("3. single choice", String.valueOf(clipData.getItemAt(i).getUri()));
+                            adapter.addThumbId(clipData.getItemAt(i).getUri().toString());
+                            imageListUri.add(clipData.getItemAt(i).getUri());
+                        }
+                        imagePath = data.getData().getPath();
+                        File f1 = new File(imagePath);
+                        picture1.setAdjustViewBounds(true);
+                        picture1.setImageURI(Uri.fromFile(f1));
+                        setUri(imageListUri);
+                    }
+                }
+            }
+        }
+        adapter.notifyDataSetChanged();
+//        startActivityForResult(data, requestCode);
+    }
+    public List<Uri> getUri(){
+        return this.sendlistUri;
+    }
+    public void setUri(List<Uri> imageListUri){
+        this.sendlistUri = imageListUri;
     }
 }
