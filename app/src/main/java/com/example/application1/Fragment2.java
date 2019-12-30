@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Path;
 import android.graphics.Point;
 import android.media.Image;
 import android.media.ThumbnailUtils;
@@ -29,9 +28,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.PagerAdapter;
 
 import java.io.File;
 import java.lang.reflect.Array;
@@ -40,11 +37,10 @@ import java.util.List;
 
 
 public class Fragment2 extends Fragment {
-
     final int PICTURE_REQUEST_CODE = 100;
     String[] permission_list = { Manifest.permission.READ_EXTERNAL_STORAGE };
     List<Uri> sendlistUri = new ArrayList<Uri>();
-
+    ImageAdapter adapter;
     public Fragment2() {
     }
 
@@ -62,13 +58,19 @@ public class Fragment2 extends Fragment {
         checkPermission();
 
         View v = inflater.inflate(R.layout.fragment_fragment2, container, false);
-
         GridView gridView = (GridView) v.findViewById(R.id.gridview1);
-        ImageAdapter adapter = new ImageAdapter(getActivity(), displayWidth, sendlistUri); //가로크기의 정보를 같이 넘긴다.
-        gridView.setAdapter(adapter);
+        adapter = new ImageAdapter(getActivity(), displayWidth); //가로크기의 정보를 같이 넘긴다.
+//        gridView.setAdapter(adapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+            }
+        });
 
         Button button = (Button) v.findViewById(R.id.selectbtn);
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { // 갤러리 들어감
@@ -79,7 +81,7 @@ public class Fragment2 extends Fragment {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICTURE_REQUEST_CODE);
             }
         });
-
+        gridView.setAdapter(adapter);
         return v;
     }
 
@@ -126,8 +128,6 @@ public class Fragment2 extends Fragment {
                 Uri uri = data.getData();
                 ClipData clipData = data.getClipData();
                 List<Uri> imageListUri = new ArrayList<>();
-                String imagePath ="";
-                ImageView picture1 = new ImageView(getActivity());
 
                 if(clipData == null){
                     Toast.makeText(getActivity(), "다중선택이 불가능한 기기입니다.", Toast.LENGTH_LONG).show();
@@ -135,23 +135,20 @@ public class Fragment2 extends Fragment {
 
                 else if(clipData != null){
                     if(clipData.getItemCount() == 1){
-
+                        adapter.addThumbId(clipData.getItemAt(0).getUri().toString());
+                        imageListUri.add(clipData.getItemAt(0).getUri());
                     }
                     else if(clipData.getItemCount() > 1 && clipData.getItemCount() < 5){
                         for(int i = 0; i < clipData.getItemCount(); i++){
                             Log.i("3. single choice", String.valueOf(clipData.getItemAt(i).getUri()));
+                            adapter.addThumbId(clipData.getItemAt(i).getUri().toString());
                             imageListUri.add(clipData.getItemAt(i).getUri());
-                            System.out.println("printxxxxx" + clipData.getItemAt(i).getUri());
                         }
-                        imagePath = data.getData().getPath();
-                        File f1 = new File(imagePath);
-                        picture1.setAdjustViewBounds(true);
-                        picture1.setImageURI(Uri.fromFile(f1));
-                        setUri(imageListUri);
                     }
                 }
             }
         }
+        adapter.notifyDataSetChanged();
 //        startActivityForResult(data, requestCode);
     }
     public List<Uri> getUri(){
@@ -160,7 +157,4 @@ public class Fragment2 extends Fragment {
     public void setUri(List<Uri> imageListUri){
         this.sendlistUri = imageListUri;
     }
-
-
-
 }
