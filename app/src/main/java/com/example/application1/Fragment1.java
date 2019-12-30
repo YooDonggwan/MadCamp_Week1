@@ -3,13 +3,18 @@ package com.example.application1;
 import androidx.fragment.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -18,7 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Fragment1 extends Fragment {
-    final List<String> LIST_MENU = MainActivity.contacts;
+    final List<String> LIST_MENU = MainActivity.names;
+    final List<PhoneBook> REF_MENU = MainActivity.phoneBooks;
 
     public Fragment1() {
         // Required empty public constructor
@@ -27,6 +33,13 @@ public class Fragment1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //For onclickview
+        Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        Point point = new Point();
+
+        display.getSize(point);
+        int displayWidth = point.x;
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment1, null);
 
@@ -34,6 +47,16 @@ public class Fragment1 extends Fragment {
 
         ListView listview = (ListView) view.findViewById(R.id.listview1);
         listview.setAdapter(Adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent myIntent = new Intent(getActivity(), ContactClickActivity.class);
+                myIntent.putExtra("name", REF_MENU.get(position).getName());
+                myIntent.putExtra("tel", REF_MENU.get(position).getTel());
+                startActivity(myIntent);
+            }
+        });
 
         return view;
         //return inflater.inflate(R.layout.fragment_fragment1, container, false);
