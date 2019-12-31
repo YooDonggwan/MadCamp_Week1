@@ -1,6 +1,7 @@
 package com.example.application1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.GridView;
 
 import androidx.fragment.app.Fragment;
@@ -21,14 +23,16 @@ public class Fragment3 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        Point point = new Point();
-        display.getSize(point);
-        int displayWidth = point.x;
-
         View v = inflater.inflate(R.layout.fragment_fragment3, container, false);
-        GridView gridView = (GridView) v.findViewById(R.id.gridview2);
-        GameAdapter adapter = new GameAdapter(getActivity(), displayWidth);
+
+//        Button startbtn = (Button)v.findViewById(R.id.game2);
+//        startbtn.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v){
+//                Intent intent = new Intent(getContext(), Game2Activity.class);
+//                getContext().startActivity(intent);
+//            }
+//        });
         return v;
     }
 }

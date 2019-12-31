@@ -25,6 +25,11 @@
             android:name=".ImageActivity"
             android:label="Selected Image">
         </activity>
+        <activity
+            android:name=".Game2Activity"
+            android:label="start game2">
+        </activity>
+
 
     </application>
 

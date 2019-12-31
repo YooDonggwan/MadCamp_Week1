@@ -10,7 +10,6 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -51,7 +50,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         int position = holder.getAdapterPosition();
         if (position != RecyclerView.NO_POSITION) {
-//                        Object tmp = mThumbIds.get(position);
             Imagelist tmp = mThumbIds.get(position);
             if (tmp.imageId != 0) {
                 holder.imageView.setImageResource(tmp.imageId);
@@ -65,7 +63,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         int pos = position;
-//        Object tmp = mThumbIds.get(position);
         Imagelist tmp = mThumbIds.get(position);
         if (tmp.imageId != 0) {
             holder.imageView.setImageResource(tmp.imageId);
@@ -73,10 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         else {
             holder.imageView.setImageURI(Uri.parse(tmp.imageUri));
         }
-//        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) holder.imageView.getLayoutParams();
-//        layoutParams.height = size;
-//        layoutParams.width = size;
-//        holder.imageView.setLayoutParams(layoutParams);
+
         holder.imageView.setLayoutParams(new RelativeLayout.LayoutParams(size, size));
         holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         holder.imageView.setPadding(pad, pad, pad, pad);

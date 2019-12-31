@@ -124,10 +124,6 @@ public class Fragment1 extends Fragment {
         return view;
     }
 
-
-
-
-
     public void contactAdd(final String name, final String phone_num){
         new Thread(){
             @Override
