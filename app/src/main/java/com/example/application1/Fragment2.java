@@ -29,6 +29,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.lang.reflect.Array;
@@ -40,7 +43,8 @@ public class Fragment2 extends Fragment {
     final int PICTURE_REQUEST_CODE = 100;
     String[] permission_list = { Manifest.permission.READ_EXTERNAL_STORAGE };
     List<Uri> sendlistUri = new ArrayList<Uri>();
-    ImageAdapter adapter;
+    RecyclerViewAdapter adapter;
+//    CustomAdapter_image adapter;
     public Fragment2() {
     }
 
@@ -53,23 +57,14 @@ public class Fragment2 extends Fragment {
 
         display.getSize(point);
         int displayWidth = point.x;
-        int displayHeight = point.y;
 
         checkPermission();
-
         View v = inflater.inflate(R.layout.fragment_fragment2, container, false);
-        GridView gridView = (GridView) v.findViewById(R.id.gridview1);
-        adapter = new ImageAdapter(getActivity(), displayWidth); //가로크기의 정보를 같이 넘긴다.
-//        gridView.setAdapter(adapter);
+//        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_fragment2, container, false);
+        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerview1);
+        adapter = new RecyclerViewAdapter(getActivity(), displayWidth);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-            }
-        });
-
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         Button button = (Button) v.findViewById(R.id.selectbtn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,10 +74,15 @@ public class Fragment2 extends Fragment {
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICTURE_REQUEST_CODE);
+//                adapter.notifyDataSetChanged();
             }
         });
-        gridView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
+
         return v;
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        recyclerView.setAdapter(adapter);
+//        return v;
     }
 
     public void checkPermission(){
@@ -100,7 +100,7 @@ public class Fragment2 extends Fragment {
             }
         }
     }
-
+//
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -118,8 +118,8 @@ public class Fragment2 extends Fragment {
             }
         }
     }
-
-
+//
+//
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
 //        super.onActivityResult(requestCode, resultCode, data);
@@ -128,29 +128,18 @@ public class Fragment2 extends Fragment {
                 Uri uri = data.getData();
                 ClipData clipData = data.getClipData();
                 List<Uri> imageListUri = new ArrayList<>();
-                String imagePath ="";
-                ImageView picture1 = new ImageView(getActivity());
 
                 if(clipData == null){
                     Toast.makeText(getActivity(), "다중선택이 불가능한 기기입니다.", Toast.LENGTH_LONG).show();
                 }
 
                 else if(clipData != null){
-                    if(clipData.getItemCount() == 1){
-
-                    }
-                    else if(clipData.getItemCount() > 1 && clipData.getItemCount() < 5){
                         for(int i = 0; i < clipData.getItemCount(); i++){
                             Log.i("3. single choice", String.valueOf(clipData.getItemAt(i).getUri()));
-                            adapter.addThumbId(clipData.getItemAt(i).getUri().toString());
+                            adapter.addList(clipData.getItemAt(i).getUri().toString());
                             imageListUri.add(clipData.getItemAt(i).getUri());
                         }
-                        imagePath = data.getData().getPath();
-                        File f1 = new File(imagePath);
-                        picture1.setAdjustViewBounds(true);
-                        picture1.setImageURI(Uri.fromFile(f1));
-                        setUri(imageListUri);
-                    }
+
                 }
             }
         }

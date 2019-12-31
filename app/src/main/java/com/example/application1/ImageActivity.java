@@ -1,39 +1,122 @@
 package com.example.application1;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ImageActivity extends Activity {
+
+    private ImagePagerAdapter imagePagerAdapter;
+    private ViewPager viewPager;
+    private Context context;
+    private ImageView imageView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.clickview);
+        setContentView(R.layout.viewpager);
 
-        //----------------------------------------------------------------
-        // 확대되는 이미지를 보여주기 위해 ImageView 뷰를 설정합니다.
-        ImageView imageView = (ImageView)findViewById(R.id.imageview);
-        setImage(imageView);
-    }
+        viewPager = (ViewPager) findViewById(R.id.view);
+        imagePagerAdapter = new ImagePagerAdapter(getApplicationContext());
+        viewPager.setAdapter(imagePagerAdapter);
 
-    private void setImage(ImageView imageView) {
-        //----------------------------------------------------------------
-        // 초기 액티비티의 GridView 뷰의 이미지 항목을 클릭할 때 생성된 인텐트는
-        // 이 액티비티는 getIntent 메소드를 호출하여 접근할 수 있습니다.
         Intent receivedIntent = getIntent();
-
-        //----------------------------------------------------------------
-        // 확대되는 이미지의 리소스 ID를 인텐트로부터 읽어들이고,
-        // 그것을 ImageView 뷰의 이미지 리소스로 설정합니다.
-
         int imageID = (Integer)receivedIntent.getExtras().get("image ID");
         String imageURI = (String)receivedIntent.getExtras().get("image URI");
         if (imageID != 0)
-            imageView.setImageResource(imageID);
+            viewPager.setCurrentItem(whereis(imagePagerAdapter.imagelist, imageID));
+//            viewPager.setCurrentItem(imagePagerAdapter.imagelist.indexOf(new Imagelist(imageID, "")));
         else if (!imageURI.equals(""))
-            imageView.setImageURI(Uri.parse(imageURI));
+            viewPager.setCurrentItem(whereis(imagePagerAdapter.imagelist, imageURI));
+//            viewPager.setCurrentItem(imagePagerAdapter.imagelist.indexOf(new Imagelist(0, imageURI)));
+
     }
 
+    private class ImagePagerAdapter extends PagerAdapter{
+
+        List<Imagelist> imagelist;
+        private LayoutInflater inflater;
+        Context context;
+
+        ImagePagerAdapter(Context context){
+            this.context = context;
+            Intent intent = getIntent();
+            this.imagelist = new ArrayList<Imagelist>();
+            this.imagelist = intent.getParcelableArrayListExtra("image List");
+        }
+
+        @Override
+        public int getCount() {
+            return imagelist.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == ((View) object);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+
+            inflater = (LayoutInflater) context.getSystemService
+                    (Context.LAYOUT_INFLATER_SERVICE);
+            System.out.println("listxxxxxxxxxxxx" + inflater);
+
+            View v = inflater.inflate(R.layout.clickview, container, false);
+            ImageView imageView = (ImageView)v.findViewById(R.id.imageviewrecycle);
+
+            Imagelist tmp = imagelist.get(position);
+            System.out.println("tmpxxxxxxxxxxx " + tmp.imageId);
+            if(tmp.imageId != 0){
+                imageView.setImageResource(tmp.imageId);
+            }
+            else if(tmp.imageId == 0){
+                imageView.setImageURI(Uri.parse(tmp.imageUri));
+            }
+
+            ((ViewPager) container).addView(v);
+            return v;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.invalidate();
+        }
+
+    }
+
+    public int whereis(List<Imagelist> list, int imageId) {
+        for (int i=0; i<list.size(); i++) {
+            Imagelist tmp = list.get(i);
+            if (tmp.imageId == imageId)
+                return i;
+        }
+        return -1;
+    }
+
+    public int whereis(List<Imagelist> list, String imageUri) {
+        for (int i=0; i<list.size(); i++) {
+            Imagelist tmp = list.get(i);
+            if (tmp.imageUri.equals(imageUri))
+                return i;
+        }
+        return -1;
+    }
 }
