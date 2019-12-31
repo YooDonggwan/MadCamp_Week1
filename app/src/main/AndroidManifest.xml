@@ -27,7 +27,7 @@
             android:name=".ContactClickActivity"
             android:label="Selected Contact">
         </activity>
-
+<!---->
     </application>
 
 </manifest>

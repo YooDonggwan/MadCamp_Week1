@@ -38,9 +38,7 @@ public class ImageClickListener implements View.OnClickListener {
         intent.putExtra("image ID", imageID);
         intent.putExtra("image URI", imageURI);
         intent.putParcelableArrayListExtra("image List", (ArrayList<? extends Parcelable >) imagelist);
-
         context.startActivity(intent);
     }
-
 
 }
