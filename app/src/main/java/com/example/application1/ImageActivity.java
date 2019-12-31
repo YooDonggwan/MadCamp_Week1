@@ -41,9 +41,11 @@ public class ImageActivity extends Activity {
         int imageID = (Integer)receivedIntent.getExtras().get("image ID");
         String imageURI = (String)receivedIntent.getExtras().get("image URI");
         if (imageID != 0)
-            viewPager.setCurrentItem(imagePagerAdapter.imagelist.indexOf(imageID));
+            viewPager.setCurrentItem(whereis(imagePagerAdapter.imagelist, imageID));
+//            viewPager.setCurrentItem(imagePagerAdapter.imagelist.indexOf(new Imagelist(imageID, "")));
         else if (!imageURI.equals(""))
-            viewPager.setCurrentItem(imagePagerAdapter.imagelist.indexOf(imageURI));
+            viewPager.setCurrentItem(whereis(imagePagerAdapter.imagelist, imageURI));
+//            viewPager.setCurrentItem(imagePagerAdapter.imagelist.indexOf(new Imagelist(0, imageURI)));
 
     }
 
@@ -78,7 +80,7 @@ public class ImageActivity extends Activity {
             System.out.println("listxxxxxxxxxxxx" + inflater);
 
             View v = inflater.inflate(R.layout.clickview, container, false);
-            ImageView imageView = (ImageView)v.findViewById(R.id.imageview);
+            ImageView imageView = (ImageView)v.findViewById(R.id.imageviewrecycle);
 
             Imagelist tmp = imagelist.get(position);
             System.out.println("tmpxxxxxxxxxxx " + tmp.imageId);
@@ -100,4 +102,21 @@ public class ImageActivity extends Activity {
 
     }
 
+    public int whereis(List<Imagelist> list, int imageId) {
+        for (int i=0; i<list.size(); i++) {
+            Imagelist tmp = list.get(i);
+            if (tmp.imageId == imageId)
+                return i;
+        }
+        return -1;
+    }
+
+    public int whereis(List<Imagelist> list, String imageUri) {
+        for (int i=0; i<list.size(); i++) {
+            Imagelist tmp = list.get(i);
+            if (tmp.imageUri.equals(imageUri))
+                return i;
+        }
+        return -1;
+    }
 }

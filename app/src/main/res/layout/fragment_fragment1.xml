@@ -19,7 +19,16 @@
         android:divider="@null"
         android:dividerHeight="0px"/>
 
-
+    <ImageButton
+        android:id="@+id/add_btn"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/add"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5sp"
+        />
 
 <!--    xmlns:tools="http://schemas.android.com/tools"-->
 <!--    android:layout_width="match_parent"-->

@@ -40,5 +40,4 @@ public class Imagelist implements Parcelable {
         dest.writeInt(imageId);
         dest.writeString(imageUri);
     }
-
 }

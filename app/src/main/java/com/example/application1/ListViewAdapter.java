@@ -24,7 +24,7 @@ public class ListViewAdapter extends ArrayAdapter {
     }
     int resourceId;
     private ListBtnClickListener listBtnClickListener;
-    private List<PhoneBook> phoneBooks;
+    public List<PhoneBook> phoneBooks;
     private boolean numOpened;
     public boolean isOpened() {
         return numOpened;
@@ -87,6 +87,7 @@ public class ListViewAdapter extends ArrayAdapter {
                 context.startActivity(intent);
             }
         });
+
 
         return convertView;
     }
