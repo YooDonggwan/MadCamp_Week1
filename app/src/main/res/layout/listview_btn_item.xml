@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.example.application1.CheckableRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    android:id="@+id/checkBox_wrapper">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,12 +46,15 @@
             android:background="@drawable/expand"
             android:layout_gravity="center_vertical"
             android:layout_centerVertical="true"/>
+
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/checkBox1"
             android:focusable="false"
             android:clickable="false"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:visibility="visible"/>
     </RelativeLayout>
 </com.example.application1.CheckableRelativeLayout>

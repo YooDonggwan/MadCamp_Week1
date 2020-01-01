@@ -19,25 +19,13 @@
         android:stretchMode="columnWidth"
         android:gravity="center"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
-<!--    <GridView-->
-<!--        android:id="@+id/gridview1"-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="fill_parent"-->
-<!--        android:columnWidth="90dp"-->
-<!--        android:numColumns="3"-->
-<!--        android:verticalSpacing="10dp"-->
-<!--        android:horizontalSpacing="10dp"-->
-<!--        android:stretchMode="columnWidth"-->
-<!--        android:gravity="center"-->
-<!--        />-->
 
     <Button
         android:id="@+id/selectbtn"
-        android:layout_width="80sp"
+        android:layout_width="50sp"
         android:layout_height="50sp"
-        android:text="Add"
         android:textColor="#FFFFFF"
-        android:background="@drawable/radius"
+        android:background="@drawable/add"
         android:textSize="20sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

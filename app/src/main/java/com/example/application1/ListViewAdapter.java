@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.Layout;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,7 +22,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListViewAdapter extends ArrayAdapter {
+public class ListViewAdapter extends ArrayAdapter{//implements View.OnLongClickListener {
     public interface ListBtnClickListener {
         void onListBtnClick(int position);
     }
@@ -26,6 +30,7 @@ public class ListViewAdapter extends ArrayAdapter {
     private ListBtnClickListener listBtnClickListener;
     public List<PhoneBook> phoneBooks;
     private boolean numOpened;
+    private boolean checkable;
     public boolean isOpened() {
         return numOpened;
     }
@@ -87,6 +92,7 @@ public class ListViewAdapter extends ArrayAdapter {
                 context.startActivity(intent);
             }
         });
+//        convertView.setOnLongClickListener(this);
 
         return convertView;
     }
@@ -100,7 +106,15 @@ public class ListViewAdapter extends ArrayAdapter {
     public Object getItem(int position) {
         return phoneBooks.get(position);
     }
-
+//
+//    @Override
+//    public boolean onLongClick(View v) {
+//        checkable=true;
+//        checkBox.setVisibility(checkable ? View.VISIBLE : View.GONE);
+//        checkBox.setChecked(checkable);
+//        notifyDataSetChanged();
+//        return true;
+//    }
 //    public void addItem(Drawable icon, String name) {
 //        ListViewItem item = new ListViewItem();
 //        item.setIcon(icon);

@@ -41,8 +41,9 @@ import java.util.List;
 public class Fragment1 extends Fragment {
     final List<String> LIST_MENU = MainActivity.names;
     final List<PhoneBook> REF_MENU = MainActivity.phoneBooks;
+//    ListView listview;
     CheckBox checkBox;
-
+    View.OnLongClickListener longClickListener;
     ListViewAdapter adapter;
     String[] permission_list = { Manifest.permission.WRITE_CONTACTS };
 
@@ -55,12 +56,15 @@ public class Fragment1 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment1, null);
+//        View checkView = inflater.inflate(R.layout.listview_btn_item, container, false);
         checkPermission();
 
-        adapter = new ListViewAdapter(getActivity(), R.layout.listview_btn_item, REF_MENU, null);
+        adapter = new ListViewAdapter(getActivity(), R.layout.listview_btn_item, REF_MENU, null);//, checkBox);
+
 
         final ListView listview = (ListView) view.findViewById(R.id.listview1);
-        checkBox = (CheckBox) listview.findViewById(R.id.checkBox1);
+//        checkBox = (CheckBox) listview.findViewById(R.id.checkBox1);
+        System.out.println("1111123432412" + checkBox);
         ImageButton add_button = (ImageButton) view.findViewById(R.id.add_btn);
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +80,8 @@ public class Fragment1 extends Fragment {
                 final Button submit = (Button) view.findViewById(R.id.buttonSubmit);
                 final EditText name = (EditText) view.findViewById(R.id.edittext_name);
                 final EditText phone_num = (EditText) view.findViewById(R.id.edittext_phone);
-
+                name.setHint("이름을 입력하세요");
+                phone_num.setHint("번호를 입력하세요");
                 final AlertDialog dialog = ad.create();
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -107,7 +112,6 @@ public class Fragment1 extends Fragment {
         });
         //체크박스 숨김
         //final CheckBox checkBox = (CheckBox) listview.findViewById(R.id.checkBox1);
-
         Button button3 = (Button) view.findViewById(R.id.del_phone_btn);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,7 +7,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.text.Layout;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -88,12 +91,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mThumbIds.size();
     }
 
-    public class Holder extends RecyclerView.ViewHolder {
+    public class Holder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         public ImageView imageView;
-        public Holder(View view) {
+        public Holder(final View view) {
             super(view);
             imageView = (ImageView) view.findViewById(R.id.imageviewrecycle);
             int pos = getAdapterPosition();
+            imageView.setOnCreateContextMenuListener(this);
             if (pos != RecyclerView.NO_POSITION) {
                 Imagelist il = mThumbIds.get(pos);
                 if (il.imageId != 0) {
@@ -128,24 +132,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         context.startActivity(intent);
                     }
 
-//                        switch (tmp.getClass().getSimpleName()) {
-//                            case "Integer":
-//                                ImageClickListener imageViewClickListner_int
-//                                        = new ImageClickListener(context, (int)tmp, "");
-//                                imageView.setOnClickListener(imageViewClickListner_int);
-//                                imageView.setImageResource((int)tmp);
-//                                break;
-//                            case "String":
-//                                ImageClickListener imageViewClickListner_str
-//                                        = new ImageClickListener(context, 0, (String)tmp);
-//                                imageView.setOnClickListener(imageViewClickListner_str);
-//                                imageView.setImageURI(Uri.parse((String)tmp));
-//                                break;
-//                        }
-
                 }
             });
         }
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            MenuItem Delete = menu.add(Menu.NONE, 1001, 1, "Delete");
+            Delete.setOnMenuItemClickListener(onEditMenu);
+        }
+
+        private final MenuItem.OnMenuItemClickListener onEditMenu = new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == 1001) {
+                    mThumbIds.remove(getAdapterPosition());
+
+                    notifyItemRemoved(getAdapterPosition());
+                    notifyItemRangeChanged(getAdapterPosition(), mThumbIds.size());
+                }
+                return true;
+            }
+        };
     }
     public void addList(String o) {
         mThumbIds.add(new Imagelist(0, o));
