@@ -41,12 +41,21 @@ public class Fragment3 extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_fragment3, container, false);
         Button memgame_button = (Button) v.findViewById(R.id.memgame_btn);
+        Button one50game_button = (Button) v.findViewById(R.id.oneto50_btn);
 
         memgame_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MemoryGameActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        one50game_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(getActivity(), Oneto50GameActivity.class);
+                startActivity(intent2);
             }
         });
         return v;

@@ -155,32 +155,33 @@ public class MemoryGameActivity extends FragmentActivity {
                                 firstSelectedPos = j;
                                 itemSelected = true;
                                 button_img[j].setImageResource(Cards.get(j));
-                            } else {
+                            } else if (firstSelectedPos != -1){
                                 secondSelectedPos = j;
                                 if (firstSelectedPos == secondSelectedPos) {
+                                    firstSelectedPos = -1;
+                                    secondSelectedPos = -1;
+                                    itemSelected = false;
                                 }
                                 else {
                                     button_img[j].setImageResource(Cards.get(j));
-                                    System.out.println(Cards.get(firstSelectedPos));
-                                    System.out.println(Cards.get(secondSelectedPos));
-                                    System.out.println(Cards.get(firstSelectedPos) - Cards.get(secondSelectedPos) == 0);
-                                    if (Cards.get(firstSelectedPos) - Cards.get(secondSelectedPos) == 0) {
-                                        found.set(firstSelectedPos, true);
-                                        found.set(secondSelectedPos, true);
-                                        remaining_cards -= 2;
-                                        remaining.setText("남은 개수 : " + Integer.toString(remaining_cards));
-                                    } else {
-                                        Handler delayHandler = new Handler();
-                                        delayHandler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                button_img[firstSelectedPos].setImageResource(R.drawable.question);
-                                                button_img[secondSelectedPos].setImageResource(R.drawable.question);
-                                                firstSelectedPos = -1;
-                                                secondSelectedPos = -1;
-                                            }
-                                        }, 500);
-
+                                    if (firstSelectedPos != -1 && secondSelectedPos != -1) {
+                                        if (Cards.get(firstSelectedPos) - Cards.get(secondSelectedPos) == 0) {
+                                            found.set(firstSelectedPos, true);
+                                            found.set(secondSelectedPos, true);
+                                            remaining_cards -= 2;
+                                            remaining.setText("남은 개수 : " + Integer.toString(remaining_cards));
+                                        } else {
+                                            Handler delayHandler = new Handler();
+                                            delayHandler.postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    button_img[firstSelectedPos].setImageResource(R.drawable.question);
+                                                    button_img[secondSelectedPos].setImageResource(R.drawable.question);
+                                                    firstSelectedPos = -1;
+                                                    secondSelectedPos = -1;
+                                                }
+                                            }, 500);
+                                        }
                                     }
                                     itemSelected = false;
                                 }

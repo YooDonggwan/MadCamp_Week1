@@ -28,6 +28,9 @@
         <activity android:name=".MemoryGameActivity"
             android:label="Memory Game">
         </activity>
+        <activity android:name=".Oneto50GameActivity"
+            android:label="1-to-50 Game">
+        </activity>
 
     </application>
 
