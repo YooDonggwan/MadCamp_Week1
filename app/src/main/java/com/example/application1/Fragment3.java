@@ -1,6 +1,7 @@
 package com.example.application1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -9,14 +10,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.GridView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fragment3 extends Fragment {
+//    RecyclerViewAdapter adapter;
+//    int errCount;
+////    long start_time;
+////    long end_time;
+//    List<Boolean> found;
 
     public Fragment3(){
-
+//        errCount = 0;
+//        found = new ArrayList<Boolean>();
     }
 
     @Override
@@ -27,8 +40,15 @@ public class Fragment3 extends Fragment {
         int displayWidth = point.x;
 
         View v = inflater.inflate(R.layout.fragment_fragment3, container, false);
-        GridView gridView = (GridView) v.findViewById(R.id.gridview2);
-        GameAdapter adapter = new GameAdapter(getActivity(), displayWidth);
+        Button memgame_button = (Button) v.findViewById(R.id.memgame_btn);
+
+        memgame_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MemoryGameActivity.class);
+                startActivity(intent);
+            }
+        });
         return v;
     }
 }

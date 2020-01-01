@@ -44,14 +44,11 @@ public class Fragment2 extends Fragment {
     String[] permission_list = { Manifest.permission.READ_EXTERNAL_STORAGE };
     List<Uri> sendlistUri = new ArrayList<Uri>();
     RecyclerViewAdapter adapter;
-//    CustomAdapter_image adapter;
     public Fragment2() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
         Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         Point point = new Point();
 

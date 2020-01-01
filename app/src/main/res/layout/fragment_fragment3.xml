@@ -7,18 +7,30 @@
     app:layout_behavior="Application1"
     tools:context="com.example.application1.MainActivity"
     tools:showIn="@layout/activity_main">
-    <GridView
-        android:id="@+id/gridview2"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:columnWidth="90dp"
-        android:numColumns="3"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
-        android:stretchMode="columnWidth"
-        android:overScrollMode="never"
-        android:gravity="center"
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="50sp"
+        android:id="@+id/memgame_btn"
+        android:text="Memory Game Start"
+        android:layout_centerInParent="true"
+        android:layout_margin="3dp"/>
 
-        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="50sp"
+        android:id="@+id/oneto50_btn"
+        android:text="1-to-50 Start"
+        android:layout_margin="3dp"
+        android:layout_centerInParent="true"
+        android:layout_toEndOf="@+id/memgame_btn"/>
+<!--    <TextView-->
+<!--        android:id="@+id/err"-->
+<!--        android:layout_width="50sp"-->
+<!--        android:layout_height="20sp"-->
+<!--        android:text="틀린 횟수"-->
+<!--        android:textSize = "10sp"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentLeft="true"-->
+<!--        android:layout_marginLeft="5sp"/>-->
 
 </RelativeLayout>
