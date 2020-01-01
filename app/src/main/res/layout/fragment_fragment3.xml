@@ -7,22 +7,28 @@
     app:layout_behavior="Application1"
     tools:context="com.example.application1.MainActivity"
     tools:showIn="@layout/activity_main">
-    <Button
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="50sp"
-        android:id="@+id/memgame_btn"
-        android:text="Memory Game Start"
-        android:layout_centerInParent="true"
-        android:layout_margin="3dp"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+        <ImageButton
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:id="@+id/memgame_btn"
+            android:background="@drawable/memorycard"
+            android:padding="6sp"
+            android:layout_margin="6sp"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="50sp"
-        android:id="@+id/oneto50_btn"
-        android:text="1-to-50 Start"
-        android:layout_margin="3dp"
-        android:layout_centerInParent="true"
-        android:layout_toEndOf="@+id/memgame_btn"/>
+        <ImageButton
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:id="@+id/oneto50_btn"
+            android:background="#ffebcd"
+            android:layout_margin="6sp"
+            android:padding="6sp"
+            android:layout_toRightOf="@+id/memgame_btn"
+            android:foreground="@drawable/numbers"/>
+    </RelativeLayout>
 <!--    <TextView-->
 <!--        android:id="@+id/err"-->
 <!--        android:layout_width="50sp"-->

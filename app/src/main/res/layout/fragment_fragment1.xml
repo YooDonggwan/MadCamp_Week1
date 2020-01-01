@@ -17,8 +17,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
+        android:choiceMode="multipleChoice"
         android:dividerHeight="0px"/>
-
+    <Button
+        android:id="@+id/del_phone_btn"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="DEL"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/radius"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="15sp"
+        android:layout_margin="5sp"
+        />
     <ImageButton
         android:id="@+id/add_btn"
         android:layout_width="50sp"
@@ -29,17 +41,5 @@
         android:layout_alignParentRight="true"
         android:layout_margin="5sp"
         />
-
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context="peace.tabbutton.Fragment1">-->
-
-<!--    &lt;!&ndash; TODO: Update blank fragment layout &ndash;&gt;-->
-<!--    <TextView-->
-<!--        android:gravity="center"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:text="연락처" />-->
 
 </RelativeLayout>

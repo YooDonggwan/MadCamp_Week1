@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
+import android.util.SparseBooleanArray;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
@@ -39,6 +41,7 @@ import java.util.List;
 public class Fragment1 extends Fragment {
     final List<String> LIST_MENU = MainActivity.names;
     final List<PhoneBook> REF_MENU = MainActivity.phoneBooks;
+    CheckBox checkBox;
 
     ListViewAdapter adapter;
     String[] permission_list = { Manifest.permission.WRITE_CONTACTS };
@@ -53,10 +56,11 @@ public class Fragment1 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment1, null);
         checkPermission();
-//        ArrayAdapter Adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU);
+
         adapter = new ListViewAdapter(getActivity(), R.layout.listview_btn_item, REF_MENU, null);
 
-        ListView listview = (ListView) view.findViewById(R.id.listview1);
+        final ListView listview = (ListView) view.findViewById(R.id.listview1);
+        checkBox = (CheckBox) listview.findViewById(R.id.checkBox1);
         ImageButton add_button = (ImageButton) view.findViewById(R.id.add_btn);
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +83,6 @@ public class Fragment1 extends Fragment {
                     public void onClick(View v) {
 
                         PhoneBook add_phone = new PhoneBook();
-//                        Log.v(TAG, "Yes Btn Click");
                         // Text 값 받아서 로그 남기기
                         String full_name = name.getText().toString();
                         String phone_number = phone_num.getText().toString();
@@ -88,25 +91,13 @@ public class Fragment1 extends Fragment {
 
                         contactAdd(full_name, phone_number);
                         adapter.phoneBooks.add(add_phone);
-
-
-//                        Log.v(TAG, value);
                         dialog.dismiss();     //닫기
                         // Event
                     }
                 });
-//                ad.setNeutralButton("What?", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-////                        Log.v(TAG,"Neutral Btn Click");
-//                        dialog.dismiss();     //닫기
-//                        // Event
-//                    }
-//                });
                 ad.setNegativeButton("취소하기", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        Log.v(TAG,"No Btn Click");
                         dialog.dismiss();     //닫기
                         // Event
                     }
@@ -114,8 +105,31 @@ public class Fragment1 extends Fragment {
                 dialog.show();
             }
         });
+        //체크박스 숨김
+        //final CheckBox checkBox = (CheckBox) listview.findViewById(R.id.checkBox1);
 
-//        adapter.phoneBooks.add(add_phone);
+        Button button3 = (Button) view.findViewById(R.id.del_phone_btn);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+           public void onClick(View v) {
+
+               SparseBooleanArray checkedItems = listview.getCheckedItemPositions();
+               int count;
+               count = adapter.getCount();
+               for (int i = count - 1; i >= 0; i--) {
+                   if (!checkedItems.get(i)) {
+                       System.out.println("1111111111111111111");
+//                        checkBox.setVisibility(View.VISIBLE);
+                   } else if (checkedItems.get(i)) {
+                       REF_MENU.remove(i);
+                   }
+               }
+               // listview 선택 초기화.
+               listview.clearChoices();
+
+               adapter.notifyDataSetChanged();
+           }
+       });
         adapter.notifyDataSetChanged();
 
         listview.setAdapter(adapter);

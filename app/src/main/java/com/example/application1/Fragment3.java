@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -40,8 +41,8 @@ public class Fragment3 extends Fragment {
         int displayWidth = point.x;
 
         View v = inflater.inflate(R.layout.fragment_fragment3, container, false);
-        Button memgame_button = (Button) v.findViewById(R.id.memgame_btn);
-        Button one50game_button = (Button) v.findViewById(R.id.oneto50_btn);
+        ImageButton memgame_button = (ImageButton) v.findViewById(R.id.memgame_btn);
+        ImageButton one50game_button = (ImageButton) v.findViewById(R.id.oneto50_btn);
 
         memgame_button.setOnClickListener(new View.OnClickListener() {
             @Override

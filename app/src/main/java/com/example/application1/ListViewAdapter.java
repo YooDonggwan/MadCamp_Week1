@@ -59,7 +59,7 @@ public class ListViewAdapter extends ArrayAdapter {
 
         ImageView iconImageView = (ImageView) convertView.findViewById(R.id.imageView1);
         final TextView nameTextView = (TextView) convertView.findViewById(R.id.textView1);
-        String name = phoneBooks.get(pos).getName();
+        final String name = phoneBooks.get(pos).getName();
         final String tel = phoneBooks.get(pos).getTel();
         nameTextView.setText(name);
         final String str_true = name + "\n" + tel;
