@@ -78,9 +78,7 @@ public class Fragment2 extends Fragment {
         recyclerView.setAdapter(adapter);
 
         return v;
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        recyclerView.setAdapter(adapter);
-//        return v;
+
     }
 
     public void checkPermission(){

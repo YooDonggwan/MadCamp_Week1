@@ -42,10 +42,8 @@ public class ImageActivity extends Activity {
         String imageURI = (String)receivedIntent.getExtras().get("image URI");
         if (imageID != 0)
             viewPager.setCurrentItem(whereis(imagePagerAdapter.imagelist, imageID));
-//            viewPager.setCurrentItem(imagePagerAdapter.imagelist.indexOf(new Imagelist(imageID, "")));
         else if (!imageURI.equals(""))
             viewPager.setCurrentItem(whereis(imagePagerAdapter.imagelist, imageURI));
-//            viewPager.setCurrentItem(imagePagerAdapter.imagelist.indexOf(new Imagelist(0, imageURI)));
 
     }
 

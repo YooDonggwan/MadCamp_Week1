@@ -23,28 +23,16 @@
 
     <Button
         android:id="@+id/selectbtn"
-        android:layout_width="80sp"
+        android:layout_width="50sp"
         android:layout_height="50sp"
-        android:text="Add"
         android:textColor="#FFFFFF"
-        android:background="@drawable/radius"
+        android:background="@drawable/add"
         android:textSize="20sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="5sp"
         />
 
-    <Button
-        android:id="@+id/del_btn"
-        android:layout_width="80sp"
-        android:layout_height="50sp"
-        android:text="DEL"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/radius"
-        android:textSize="20sp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_margin="5sp" />
 
 </RelativeLayout>
 
