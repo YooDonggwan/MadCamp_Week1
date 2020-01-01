@@ -1,9 +1,12 @@
 package com.example.application1;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,6 +51,13 @@ public class ListViewAdapter extends ArrayAdapter {
         this.numOpened = false;
     }
 
+//    private boolean mClick = false;
+
+//    public void toggleCheckBox(boolean bClick){
+//        mClick = bClick;
+//        notifyDataSetChanged();
+//    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final int pos = position;
@@ -57,9 +68,17 @@ public class ListViewAdapter extends ArrayAdapter {
             convertView = inflater.inflate(R.layout.listview_btn_item, parent, false);
         }
 
+//        CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkBox1);
+//        if(mClick){
+//            checkBox.setVisibility(View.VISIBLE);
+//        }
+//        else{
+//            checkBox.setVisibility(View.GONE);
+//        }
+
         ImageView iconImageView = (ImageView) convertView.findViewById(R.id.imageView1);
         final TextView nameTextView = (TextView) convertView.findViewById(R.id.textView1);
-        String name = phoneBooks.get(pos).getName();
+        final String name = phoneBooks.get(pos).getName();
         final String tel = phoneBooks.get(pos).getTel();
         nameTextView.setText(name);
         final String str_true = name + "\n" + tel;
@@ -87,6 +106,7 @@ public class ListViewAdapter extends ArrayAdapter {
                 context.startActivity(intent);
             }
         });
+
 
 
         return convertView;
