@@ -45,10 +45,7 @@ public class MainActivity extends AppCompatActivity {
     //For Tab Layout
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    static private Context context;
     private String[] permission_list = { Manifest.permission.READ_CONTACTS, Manifest.permission.CALL_PHONE };
-
-    //For Game Tab
 
 
     @Override
@@ -132,9 +129,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-    }
-
-    public static Context getAppContext() {
-        return MainActivity.context;
     }
 }

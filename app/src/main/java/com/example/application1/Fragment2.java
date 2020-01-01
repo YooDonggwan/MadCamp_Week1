@@ -57,7 +57,6 @@ public class Fragment2 extends Fragment {
 
         checkPermission();
         View v = inflater.inflate(R.layout.fragment_fragment2, container, false);
-//        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_fragment2, container, false);
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerview1);
         adapter = new RecyclerViewAdapter(getActivity(), displayWidth);
 
@@ -71,15 +70,11 @@ public class Fragment2 extends Fragment {
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICTURE_REQUEST_CODE);
-//                adapter.notifyDataSetChanged();
             }
         });
         recyclerView.setAdapter(adapter);
 
         return v;
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        recyclerView.setAdapter(adapter);
-//        return v;
     }
 
     public void checkPermission(){
@@ -119,10 +114,8 @@ public class Fragment2 extends Fragment {
 //
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-//        super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == PICTURE_REQUEST_CODE) {
             if(resultCode == getActivity().RESULT_OK){
-                Uri uri = data.getData();
                 ClipData clipData = data.getClipData();
                 List<Uri> imageListUri = new ArrayList<>();
 
@@ -141,12 +134,5 @@ public class Fragment2 extends Fragment {
             }
         }
         adapter.notifyDataSetChanged();
-//        startActivityForResult(data, requestCode);
-    }
-    public List<Uri> getUri(){
-        return this.sendlistUri;
-    }
-    public void setUri(List<Uri> imageListUri){
-        this.sendlistUri = imageListUri;
     }
 }

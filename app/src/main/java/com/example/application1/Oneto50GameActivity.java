@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

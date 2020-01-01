@@ -1,14 +1,5 @@
 package com.example.application1;
 
-import android.content.ContentResolver;
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class PhoneBook {
     private String name;
     private String tel;

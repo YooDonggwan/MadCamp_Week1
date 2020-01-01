@@ -17,26 +17,16 @@
             android:id="@+id/memgame_btn"
             android:background="@drawable/memorycard"
             android:padding="6sp"
-            android:layout_margin="6sp"/>
+            android:layout_margin="40sp"/>
 
         <ImageButton
             android:layout_width="100sp"
             android:layout_height="100sp"
             android:id="@+id/oneto50_btn"
             android:background="#ffebcd"
-            android:layout_margin="6sp"
+            android:layout_margin="40sp"
             android:padding="6sp"
             android:layout_toRightOf="@+id/memgame_btn"
             android:foreground="@drawable/numbers"/>
     </RelativeLayout>
-<!--    <TextView-->
-<!--        android:id="@+id/err"-->
-<!--        android:layout_width="50sp"-->
-<!--        android:layout_height="20sp"-->
-<!--        android:text="틀린 횟수"-->
-<!--        android:textSize = "10sp"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_alignParentLeft="true"-->
-<!--        android:layout_marginLeft="5sp"/>-->
-
 </RelativeLayout>

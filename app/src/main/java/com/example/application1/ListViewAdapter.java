@@ -2,35 +2,26 @@ package com.example.application1;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.text.Layout;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class ListViewAdapter extends ArrayAdapter{//implements View.OnLongClickListener {
-    public interface ListBtnClickListener {
-        void onListBtnClick(int position);
-    }
+import static android.view.View.VISIBLE;
+
+public class ListViewAdapter extends ArrayAdapter {
     int resourceId;
-    private ListBtnClickListener listBtnClickListener;
     public List<PhoneBook> phoneBooks;
     private boolean numOpened;
-    private boolean checkable;
+    public boolean checkable;
+    private boolean nowVisible;
     public boolean isOpened() {
         return numOpened;
     }
@@ -44,17 +35,19 @@ public class ListViewAdapter extends ArrayAdapter{//implements View.OnLongClickL
         }
     }
 
-    public ListViewAdapter(Context context, int resource, List<PhoneBook> list, ListBtnClickListener clickListener) {
+    public ListViewAdapter(Context context, int resource, List<PhoneBook> list) {
         super(context, resource, list);
         this.resourceId = resource;
-        this.listBtnClickListener = clickListener;
         this.phoneBooks = list;
         this.numOpened = false;
+        this.checkable = false;
+        this.nowVisible = false;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final int pos = position;
+        int longClicked = pos;
         final Context context = parent.getContext();
 
         if (convertView == null) {
@@ -92,8 +85,29 @@ public class ListViewAdapter extends ArrayAdapter{//implements View.OnLongClickL
                 context.startActivity(intent);
             }
         });
-//        convertView.setOnLongClickListener(this);
 
+        final ImageButton button3 = (ImageButton) convertView.findViewById(R.id.delbtn);
+        button3.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                phoneBooks.remove(pos);
+                notifyDataSetChanged();
+                button3.setVisibility(View.GONE);
+            }
+        });
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (nowVisible) {
+                    button3.setVisibility(View.GONE);
+                    nowVisible = false;
+                }
+                else {
+                    button3.setVisibility(VISIBLE);
+                    nowVisible = true;
+                }
+                return true;
+            }
+        });
         return convertView;
     }
 
@@ -106,20 +120,4 @@ public class ListViewAdapter extends ArrayAdapter{//implements View.OnLongClickL
     public Object getItem(int position) {
         return phoneBooks.get(position);
     }
-//
-//    @Override
-//    public boolean onLongClick(View v) {
-//        checkable=true;
-//        checkBox.setVisibility(checkable ? View.VISIBLE : View.GONE);
-//        checkBox.setChecked(checkable);
-//        notifyDataSetChanged();
-//        return true;
-//    }
-//    public void addItem(Drawable icon, String name) {
-//        ListViewItem item = new ListViewItem();
-//        item.setIcon(icon);
-//        item.setName(name);
-//
-//        listViewItemList.add(item);
-//    }
 }

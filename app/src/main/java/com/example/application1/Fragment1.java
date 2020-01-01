@@ -40,10 +40,7 @@ import java.util.List;
 
 public class Fragment1 extends Fragment {
     final List<String> LIST_MENU = MainActivity.names;
-    final List<PhoneBook> REF_MENU = MainActivity.phoneBooks;
-//    ListView listview;
-    CheckBox checkBox;
-    View.OnLongClickListener longClickListener;
+    List<PhoneBook> REF_MENU = MainActivity.phoneBooks;
     ListViewAdapter adapter;
     String[] permission_list = { Manifest.permission.WRITE_CONTACTS };
 
@@ -56,15 +53,11 @@ public class Fragment1 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment1, null);
-//        View checkView = inflater.inflate(R.layout.listview_btn_item, container, false);
         checkPermission();
 
-        adapter = new ListViewAdapter(getActivity(), R.layout.listview_btn_item, REF_MENU, null);//, checkBox);
-
+        adapter = new ListViewAdapter(getActivity(), R.layout.listview_btn_item, REF_MENU);
 
         final ListView listview = (ListView) view.findViewById(R.id.listview1);
-//        checkBox = (CheckBox) listview.findViewById(R.id.checkBox1);
-        System.out.println("1111123432412" + checkBox);
         ImageButton add_button = (ImageButton) view.findViewById(R.id.add_btn);
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,49 +90,22 @@ public class Fragment1 extends Fragment {
                         contactAdd(full_name, phone_number);
                         adapter.phoneBooks.add(add_phone);
                         dialog.dismiss();     //닫기
-                        // Event
                     }
                 });
                 ad.setNegativeButton("취소하기", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();     //닫기
-                        // Event
                     }
                 });
                 dialog.show();
             }
         });
-        //체크박스 숨김
-        //final CheckBox checkBox = (CheckBox) listview.findViewById(R.id.checkBox1);
-        Button button3 = (Button) view.findViewById(R.id.del_phone_btn);
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-           public void onClick(View v) {
-
-               SparseBooleanArray checkedItems = listview.getCheckedItemPositions();
-               int count;
-               count = adapter.getCount();
-               for (int i = count - 1; i >= 0; i--) {
-                   if (!checkedItems.get(i)) {
-                       System.out.println("1111111111111111111");
-//                        checkBox.setVisibility(View.VISIBLE);
-                   } else if (checkedItems.get(i)) {
-                       REF_MENU.remove(i);
-                   }
-               }
-               // listview 선택 초기화.
-               listview.clearChoices();
-
-               adapter.notifyDataSetChanged();
-           }
-       });
         adapter.notifyDataSetChanged();
-
         listview.setAdapter(adapter);
+        REF_MENU = adapter.phoneBooks;
 
         return view;
-        //return inflater.inflate(R.layout.fragment_fragment1, container, false);
     }
     public void contactAdd(final String name, final String phone_num){
         new Thread(){

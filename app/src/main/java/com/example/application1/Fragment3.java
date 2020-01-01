@@ -22,15 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Fragment3 extends Fragment {
-//    RecyclerViewAdapter adapter;
-//    int errCount;
-////    long start_time;
-////    long end_time;
-//    List<Boolean> found;
-
     public Fragment3(){
-//        errCount = 0;
-//        found = new ArrayList<Boolean>();
     }
 
     @Override
@@ -38,7 +30,6 @@ public class Fragment3 extends Fragment {
         Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         Point point = new Point();
         display.getSize(point);
-        int displayWidth = point.x;
 
         View v = inflater.inflate(R.layout.fragment_fragment3, container, false);
         ImageButton memgame_button = (ImageButton) v.findViewById(R.id.memgame_btn);

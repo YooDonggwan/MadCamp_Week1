@@ -1,7 +1,5 @@
 package com.example.application1;
 
-import android.app.Activity;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,7 +31,6 @@ public class MemoryGameActivity extends FragmentActivity {
     private int secondSelectedPos;
     private boolean everClick;
     private int remaining_cards;
-    private long start_time;
     private long taken_time;
     private double real_time;
     private TimerTask timerTask;
@@ -89,9 +86,6 @@ public class MemoryGameActivity extends FragmentActivity {
         include.setVisibility(View.VISIBLE);
         game();
         all_found();
-//        while (!foundAll(found)) {
-//
-//        }
     }
     private void updateTime() {
         cur_time.setText(String.format("소요 시간 : %.1f", real_time));
@@ -148,7 +142,6 @@ public class MemoryGameActivity extends FragmentActivity {
                     if (remaining_cards > 0) {
                         if (!everClick) {
                             everClick = true;
-                            start_time = System.currentTimeMillis();
                         }
                         if (!found.get(j)) {
                             if (!itemSelected) {

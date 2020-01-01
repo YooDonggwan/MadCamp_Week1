@@ -3,17 +3,12 @@ package com.example.application1;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -24,9 +19,6 @@ public class ImageActivity extends Activity {
 
     private ImagePagerAdapter imagePagerAdapter;
     private ViewPager viewPager;
-    private Context context;
-    private ImageView imageView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +34,8 @@ public class ImageActivity extends Activity {
         String imageURI = (String)receivedIntent.getExtras().get("image URI");
         if (imageID != 0)
             viewPager.setCurrentItem(whereis(imagePagerAdapter.imagelist, imageID));
-//            viewPager.setCurrentItem(imagePagerAdapter.imagelist.indexOf(new Imagelist(imageID, "")));
         else if (!imageURI.equals(""))
             viewPager.setCurrentItem(whereis(imagePagerAdapter.imagelist, imageURI));
-//            viewPager.setCurrentItem(imagePagerAdapter.imagelist.indexOf(new Imagelist(0, imageURI)));
-
     }
 
     private class ImagePagerAdapter extends PagerAdapter{
@@ -77,13 +66,11 @@ public class ImageActivity extends Activity {
 
             inflater = (LayoutInflater) context.getSystemService
                     (Context.LAYOUT_INFLATER_SERVICE);
-            System.out.println("listxxxxxxxxxxxx" + inflater);
 
             View v = inflater.inflate(R.layout.clickview, container, false);
             ImageView imageView = (ImageView)v.findViewById(R.id.imageviewrecycle);
 
             Imagelist tmp = imagelist.get(position);
-            System.out.println("tmpxxxxxxxxxxx " + tmp.imageId);
             if(tmp.imageId != 0){
                 imageView.setImageResource(tmp.imageId);
             }
